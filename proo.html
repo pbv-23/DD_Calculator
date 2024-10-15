@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amount Calculator</title>
+    <script>
+        function roundno(num) {
+            if (num % 1000 === 0) {
+                return num;
+            } else {
+                return ((Math.floor(num / 1000) + 1) * 1000);
+            }
+        }
+
+        function calculateAmount() {
+            var am = parseInt(document.getElementById('amount').value);
+            var tot = 0;
+
+            if (am >= 1 && am <= 5000) {
+                tot += 25;
+            } else if (am >= 5001 && am <= 10000) {
+                tot += 50;
+            } else if (am >= 10001 && am <= 12000) {
+                tot += 60;
+            } else if (am >= 12001 && am <= 100000) {
+                tot += (roundno(am) / 1000) * 5;
+            } else if (am >= 100001 && am <= 150000) {
+                tot += 600;
+            } else if (am >= 150001) {
+                var t = (roundno(am) / 1000) * 4;
+                if (t > 2000) {
+                    tot += 2000;
+                } else {
+                    tot += t;
+                }
+            } else {
+                document.getElementById('result').innerText = 'ERROR!';
+                return;
+            }
+
+            document.getElementById('result').innerText = 'The DD amount = ' + tot;
+        }
+    </script>
+</head>
+<body>
+    <h1>Amount Calculator</h1>
+    <form onsubmit="event.preventDefault(); calculateAmount();">
+        <label for="amount">Enter the amount:</label>
+        <input type="number" id="amount" required>
+        <button type="submit">Calculate</button>
+    </form>
+    <p id="result"></p>
+</body>
+</html>
